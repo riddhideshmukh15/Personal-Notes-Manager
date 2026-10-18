@@ -45,4 +45,4 @@ Note saved successfully!
 Riddhi Deshmukh
 
 ---
-This project was created for Python practice and learning.
+
