@@ -4,9 +4,11 @@ print("===== Personal Notes Manager =====")
 while True:
     print("\n1. Add Note")
     print("2. View Notes")
-    print("3. Exit")
+    print("3. Search Notes")
+    print("4. Delete All Notes")
+    print("5. Exit")
 
-    choice = input("Enter choice: ")
+    choice = input("Enter your choice: ")
 
     if choice == "1":
         note = input("Enter your note: ")
@@ -21,18 +23,47 @@ while True:
             with open("notes.txt", "r") as file:
                 notes = file.read()
 
-                if notes:
-                    print("\nYour notes:")
+                if notes.strip():
+                    print("\n===== Your Notes =====")
                     print(notes)
                 else:
-                    print("No notes found!")
+                    print("Your notes are empty!")
 
         except FileNotFoundError:
             print("No notes found!")
 
     elif choice == "3":
-        print("Goodbye!")
+        keyword = input("Enter a word to search: ").lower()
+
+        try:
+            with open("notes.txt", "r") as file:
+                found = False
+
+                for note in file:
+                    if keyword in note.lower():
+                        print(note.strip())
+                        found = True
+
+                if not found:
+                    print("No matching notes found!")
+
+        except FileNotFoundError:
+            print("No notes found!")
+
+    elif choice == "4":
+        confirm = input("Delete all notes? (yes/no): ")
+
+        if confirm.lower() == "yes":
+            with open("notes.txt", "w") as file:
+                pass
+
+            print("All notes deleted!")
+        else:
+            print("Deletion cancelled.")
+
+    elif choice == "5":
+        print("Thank you for using Personal Notes Manager!")
         break
 
     else:
-        print("Invalid choice!")
+        print("Invalid choice! Please try again.")
