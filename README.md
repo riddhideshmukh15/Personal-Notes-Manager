@@ -1,50 +1,72 @@
-# Personal Notes Manager 📝
 
-## 📌 About the Project
+print("===== Personal Notes Manager =====")
 
-Personal Notes Manager is a simple Python project that allows users to create, view, search, and delete personal notes. It stores notes in a text file so they remain saved even after the program is closed.
+while True:
+    print("\n1. Add Note")
+    print("2. View Notes")
+    print("3. Search Notes")
+    print("4. Delete All Notes")
+    print("5. Exit")
 
-This project helped me practice file handling, loops, conditional statements, user input, and exception handling in Python.
+    choice = input("Enter your choice: ")
 
-## ✨ Features
+    if choice == "1":
+        title = input("Enter note title: ")
+        note = input("Enter your note: ")
 
-- **Add Note:** Write and save a new note.
-- **View Notes:** Display all saved notes.
-- **Search Notes:** Find notes using a keyword.
-- **Delete All Notes:** Delete all saved notes with confirmation.
-- **Exit:** Close the program safely.
-- **File Handling:** Store notes in `notes.txt` for future use.
-- **Error Handling:** Handle cases where no notes file exists.
+        with open("notes.txt", "a") as file:
+            file.write("Title: " + title + "\n")
+            file.write("Note: " + note + "\n")
+            file.write("------------------------\n")
 
-## 🛠️ Technologies Used
+        print("Note saved successfully!")
 
-- Python
-- File Handling (`open()`)
-- Loops and Conditional Statements
-- Exception Handling (`try-except`)
-- String Methods
+    elif choice == "2":
+        try:
+            with open("notes.txt", "r") as file:
+                notes = file.read()
 
-## 📂 Project Structure
+                if notes.strip():
+                    print("\n===== Your Notes =====")
+                    print(notes)
+                else:
+                    print("Your notes are empty!")
 
-```text
-Personal-Notes-Manager/
-│
-├── Personal_Notes_Manager.py
-├── notes.txt
-└── README.md
-```
+        except FileNotFoundError:
+            print("No notes found!")
 
-## 🎯 Learning Outcomes
+    elif choice == "3":
+        keyword = input("Enter a word to search: ").lower()
 
-- Practiced reading and writing files in Python.
-- Learned how to search text using keywords.
-- Improved my understanding of `while` loops and `if-elif-else`.
-- Used exception handling to manage missing files.
-- Built a menu-driven Python application.
+        try:
+            with open("notes.txt", "r") as file:
+                found = False
 
-## 👩‍💻 Author
+                for note in file:
+                    if keyword in note.lower():
+                        print(note.strip())
+                        found = True
 
-Riddhi Deshmukh
+                if not found:
+                    print("No matching notes found!")
 
----
+        except FileNotFoundError:
+            print("No notes found!")
 
+    elif choice == "4":
+        confirm = input("Delete all notes? (yes/no): ")
+
+        if confirm.lower() == "yes":
+            with open("notes.txt", "w") as file:
+                pass
+
+            print("All notes deleted!")
+        else:
+            print("Deletion cancelled.")
+
+    elif choice == "5":
+        print("Thank you for using Personal Notes Manager!")
+        break
+
+    else:
+        print("Invalid choice! Please try again.")
