@@ -11,10 +11,12 @@ while True:
     choice = input("Enter your choice: ")
 
     if choice == "1":
+        title = input("Enter note title: ")
         note = input("Enter your note: ")
 
         with open("notes.txt", "a") as file:
-            file.write(note + "\n")
+            file.write("Title: " + title + "\n")
+            file.write("Note: " + note + "\n")
 
         print("Note saved successfully!")
 
